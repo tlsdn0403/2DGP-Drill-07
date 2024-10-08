@@ -16,8 +16,8 @@ class Grass:
 
 class Boy:
     def __init__(self):
-        self.x,self.y=random.randint(100,700),90
-        self.frame=0
+        self.x,self.y=random.randint(0,200),90
+        self.frame=random.randint(0,7)
         self.image=load_image('run_animation.png')
     
     def update(self):
@@ -26,15 +26,28 @@ class Boy:
 
     def draw(self):
         self.image.clip_draw(self.frame*100,0,100,100,self.x,self.y)
+
+
 class Ball:
     def __init__(self):
-        self.x,self.y=400,90
-        self.image=load_image('ball21x21.png')
+        self.x,self.y=random.randint(0,799),599
+        self.down=random.randint(3,8)
+        ran=random.randint(0,1)
+        if ran==1:
+            self.image=load_image('ball21x21.png')
+        else:
+            self.image=load_image('ball41x41.png')
+        
     def update(self):
-        pass
+        if self.y>60:
+            self.y-=self.down
     def draw(self):
         self.image.draw(self.x,self.y)
         
+
+
+##################          함수       ######################
+
 
 def handle_events():
     global running
@@ -46,19 +59,14 @@ def handle_events():
             running = False
 
 def update_world():
-    grass.update()
-    for boy in team:
-        boy.update()
-    ball.update()
-    pass
+   for o in world:
+       o.update()
 
 
 def render_world():
     clear_canvas()
-    grass.draw()
-    for boy in team:
-        boy.draw()
-    ball.draw()
+    for o in world:
+        o.draw()
     update_canvas()
 
 
@@ -66,11 +74,18 @@ def reset_world(): #초기화 함수
     global running
     global grass   #다른곳에서도 볼 수 있도록 글로벌 처리
     global team
-    global ball
+    global balls
+    global world
     running=True
+    world=[]
     grass=Grass()#글래스라는 클래스를 이용해서 grass객체를 생성
+    world.append(grass)
+
     team=[Boy() for i in range(10)]
-    ball=Ball()
+    world+=team
+
+    balls=[Ball() for i in range(20)]
+    world+=balls
 
 
 
