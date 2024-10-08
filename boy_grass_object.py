@@ -13,7 +13,27 @@ class Grass:
         self.image.draw(400,30)
     pass
 
+class Boy:
+    def __init__(self):
+        self.x,self.y=0,90
+        self.frame=0
+        self.image=load_image('run_animation.png')
+    
+    def update(self):
+        self.frame=(self.frame+1)%8
+        self.x+=5
 
+    def draw(self):
+        self.image.clip_draw(self.frame*100,0,100,100,self.x,self.y)
+class Ball:
+    def __init__(self):
+        self.x,self.y=400,90
+        self.image=load_image('ball21x21.png')
+    def update(self):
+        pass
+    def draw(self):
+        self.image.draw(self.x,self.y)
+        
 
 def handle_events():
     global running
@@ -26,20 +46,28 @@ def handle_events():
 
 def update_world():
     grass.update()
+    boy.update()
+    ball.update()
     pass
 
 
 def render_world():
     clear_canvas()
     grass.draw()
+    boy.draw()
+    ball.draw()
     update_canvas()
 
 
 def reset_world(): #초기화 함수
     global running
     global grass   #다른곳에서도 볼 수 있도록 글로벌 처리
+    global boy
+    global ball
     running=True
     grass=Grass()#글래스라는 클래스를 이용해서 grass객체를 생성
+    boy=Boy()
+    ball=Ball()
 
 
 
