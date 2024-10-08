@@ -2,6 +2,15 @@ from pico2d import *
 
 # Game object class here
 class Grass:
+    #생성자를 이용해서 객체의 초기 상태를 정의
+    def __init__(self): # self:모양이 전혀 없는 순수한 붕어빵이다
+        self.image=load_image('grass.png')
+
+    def update(self): #잔디는 움직이지않음으로
+        pass
+
+    def draw(self):
+        self.image.draw(400,30)
     pass
 
 
@@ -16,11 +25,13 @@ def handle_events():
             running = False
 
 def update_world():
+    grass.update()
     pass
 
 
 def render_world():
     clear_canvas()
+    grass.draw()
     update_canvas()
 
 
